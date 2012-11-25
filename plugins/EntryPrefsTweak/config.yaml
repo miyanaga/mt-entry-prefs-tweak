@@ -1,0 +1,68 @@
+name: <__trans phrase="Entry And Page Preference Customizer">
+id: EntryPrefsTweak
+key: EntryPrefsTweak
+author_name: Kunihiko Miyanaga
+author_link: http://www.ideamans.com/
+description: <__trans phrase="Open Settings > Compose to customize preference on each blog/website.">
+version: 0.20
+
+object_types:
+    blog:
+        entry_prefs_allow_hide_system: integer meta
+        entry_prefs_allow_sort_system: integer meta
+        entry_prefs_allow_only_admin: integer meta
+        page_prefs_allow_hide_system: integer meta
+        page_prefs_allow_sort_system: integer meta
+        page_prefs_allow_only_admin: integer meta
+    website:
+        page_prefs_allow_hide_system: integer meta
+        page_prefs_allow_sort_system: integer meta
+        page_prefs_allow_only_admin: integer meta
+
+applications:
+    cms:
+        methods:
+            # Bypass original method
+            save_entry_prefs: $EntryPrefsTweak::MT::EntryPrefsTweak::CMS::save_entry_prefs
+
+        callbacks:
+            template_param.cfg_entry: $EntryPrefsTweak::MT::EntryPrefsTweak::CMS::template_param_cfg_entry
+            template_param.edit_entry: $EntryPrefsTweak::MT::EntryPrefsTweak::CMS::template_param_edit_entry
+            cms_pre_save.blog: $EntryPrefsTweak::MT::EntryPrefsTweak::CMS::pre_save_blog
+            cms_pre_save.website: $EntryPrefsTweak::MT::EntryPrefsTweak::CMS::pre_save_blog
+
+        entry_prefs_tweaks:
+            entry_prefs_allow_hide_system:
+                order: 100
+                type: entry
+                label: Allow to hide title field and body editor.
+            entry_prefs_allow_sort_system:
+                order: 200
+                type: entry
+                label: Allow to sort title field and body editor.
+            entry_prefs_allow_only_admin:
+                order: 300
+                type: entry
+                label: Allow to change preference only for blog/website administrator and share it to non-administrators.
+            page_prefs_allow_hide_system:
+                order: 400
+                type: page
+                label: Allow to hide title field and body editor.
+            page_prefs_allow_sort_system:
+                order: 500
+                type: page
+                label: Allow to sort title field and body editor.
+            page_prefs_allow_only_admin:
+                order: 600
+                type: page
+                label: Allow to change preference only for blog/website administrator and share it to non-administrators.
+
+l10n_lexicon:
+    ja:
+        'Entry And Page Preference Customizer': 'ブログ記事・ウェブページ表示設定カスタマイズ'
+        'Open Settings > Compose to customize preference on each blog/website.': '表示設定をカスタマイズするには各ブログ/ウェブサイトで 設定 > 投稿 を開いてください'
+        'Entry Preference Tweak': 'ブログ記事の表示設定'
+        'Page Preference Tweak': 'ウェブページの表示設定'
+        'Allow to hide title field and body editor.': 'タイトルと本文エディタの非表示を可能にします'
+        'Allow to sort title field and body editor.': 'タイトルと本文エディタの並べ替えを可能にします'
+        'Allow to change preference only for blog/website administrator and share it to non-administrators.': 'ブログ/ウェブサイト管理者のみ表示オプションの変更を許可し、管理者でないユーザーに適用します'

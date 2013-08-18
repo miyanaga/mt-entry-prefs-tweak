@@ -9,6 +9,7 @@ sub template_param_cfg_entry {
         || return 1;
 
     for my $t ( qw/entry page/ ) {
+        next if MT->version_number < 6.0 && !$blog->is_blog && $t eq 'entry';
         my $key = join('', $t, '_prefs_tweaks');
         my $tweaks = $app->registry('entry_prefs_tweaks') || {};
         my @tweaks = sort { $a->{order} <=> $b->{order} } grep { $_->{type} eq $t } map {
